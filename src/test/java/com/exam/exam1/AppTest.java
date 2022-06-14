@@ -80,4 +80,9 @@ public class AppTest {
     public void 복합연산_1_더하기_4_곱하기_2() {
         assertEquals(9, new Calc().run("1 + 4 * 2"));
     }
+
+    @Test
+    public void 복합연산__괄호열기_1_더하기_4_괄호닫기_곱하기_2() {
+        assertEquals(10, new Calc().run("(1 + 4) * 2"));
+    }
 }

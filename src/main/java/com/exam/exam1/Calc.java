@@ -19,10 +19,19 @@ public class Calc {
             return plus(s);
         }
 
-        int splitIndex = 0;
+        // 더하기, 빼기로 나눌 수 있는 지 체크
+        int splitIndex = -1;
+        int bracketCount = 0;
         boolean isPlus = true;
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+            if (s.charAt(i) == '(') {
+                bracketCount++;
+            } else if (s.charAt(i) == ')') {
+                bracketCount--;
+            } else if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+                if (bracketCount > 0) {
+                    continue;
+                }
                 splitIndex = i;
                 if (s.charAt(i) == '-') {
                     isPlus = false;
@@ -31,14 +40,50 @@ public class Calc {
             }
         }
 
-        String head = s.substring(0, splitIndex).trim();
-        String tail = s.substring(splitIndex + 1, s.length()).trim();
+        if (splitIndex != -1) {
+            String head = s.substring(0, splitIndex).trim();
+            String tail = s.substring(splitIndex + 1).trim();
 
-        if (isPlus) {
-            return run(head) + run(tail);
+            if (isPlus) {
+                return run(head) + run(tail);
+            }
+
+            return run(head) - run(tail);
+        }
+        //
+
+        splitIndex = -1;
+        bracketCount = 0;
+        boolean isMulti = true;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                bracketCount++;
+            } else if (s.charAt(i) == ')') {
+                bracketCount--;
+            } else if (s.charAt(i) == '*' || s.charAt(i) == '/') {
+                if (bracketCount > 0) {
+                    continue;
+                }
+                splitIndex = i;
+                if (s.charAt(i) == '/') {
+                    isMulti = false;
+                }
+                break;
+            }
         }
 
-        return run(head) - run(tail);
+        if (splitIndex != -1) {
+            String head = s.substring(0, splitIndex).trim();
+            String tail = s.substring(splitIndex + 1).trim();
+
+            if (isMulti) {
+                return run(head) * run(tail);
+            }
+
+            return run(head) / run(tail);
+        }
+        return 0;
     }
 
     private String getOperatorCode(String s) {

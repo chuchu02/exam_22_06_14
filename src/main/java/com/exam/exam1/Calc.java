@@ -98,20 +98,25 @@ public class Calc {
         int nonNumberOperatorCount = 0;
 
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(' || s.charAt(i) == '+' || s.charAt(i) == '-' || s.charAt(i) == '*' || s.charAt(i) == '/') {
+            if(s.charAt(i) == '(') {
                 nonNumberOperatorCount++;
+            }
+            else if (s.charAt(i) == '+' || s.charAt(i) == '-' || s.charAt(i) == '*' || s.charAt(i) == '/') {
+                if(s.charAt(i + 1) == ' ') {
+                    nonNumberOperatorCount++;
+                }
             }
         }
 
         if (nonNumberOperatorCount == 1) {
             // 단순연산 : -
-            if (s.indexOf('-') != -1) return "-";
+            if (s.indexOf(" - ") != -1) return "-";
             // 단순연산 : +
-            if (s.indexOf('+') != -1) return "+";
+            if (s.indexOf(" + ") != -1) return "+";
             // 단순연산 : *
-            if (s.indexOf('*') != -1) return "*";
+            if (s.indexOf(" * ") != -1) return "*";
             // 단순연산 : /
-            if (s.indexOf('/') != -1) return "/";
+            if (s.indexOf(" / ") != -1) return "/";
         }
 
         return "splitInTwo";

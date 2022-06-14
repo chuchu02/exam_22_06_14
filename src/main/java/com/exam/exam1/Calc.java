@@ -32,6 +32,10 @@ public class Calc {
                 if (bracketCount > 0) {
                     continue;
                 }
+
+                if(s.charAt(i + 1) != ' '){
+                    continue;
+                }
                 splitIndex = i;
                 if (s.charAt(i) == '-') {
                     isPlus = false;
@@ -65,6 +69,7 @@ public class Calc {
                 if (bracketCount > 0) {
                     continue;
                 }
+
                 splitIndex = i;
                 if (s.charAt(i) == '/') {
                     isMulti = false;
